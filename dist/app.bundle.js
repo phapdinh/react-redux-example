@@ -60,9 +60,9 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _App = __webpack_require__(70);
+	var _app = __webpack_require__(70);
 
-	var _App2 = _interopRequireDefault(_App);
+	var _app2 = _interopRequireDefault(_app);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71,7 +71,7 @@
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: store },
-	  _react2.default.createElement(_App2.default, null)
+	  _react2.default.createElement(_app2.default, null)
 	), document.getElementById('app'));
 
 /***/ }),
@@ -21277,17 +21277,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Footer = __webpack_require__(71);
+	var _footer = __webpack_require__(71);
 
-	var _Footer2 = _interopRequireDefault(_Footer);
+	var _footer2 = _interopRequireDefault(_footer);
 
-	var _AddTodo = __webpack_require__(75);
+	var _addTodo = __webpack_require__(75);
 
-	var _AddTodo2 = _interopRequireDefault(_AddTodo);
+	var _addTodo2 = _interopRequireDefault(_addTodo);
 
-	var _VisibleTodoList = __webpack_require__(76);
+	var _todoList = __webpack_require__(76);
 
-	var _VisibleTodoList2 = _interopRequireDefault(_VisibleTodoList);
+	var _todoList2 = _interopRequireDefault(_todoList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21295,9 +21295,9 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_AddTodo2.default, null),
-	    _react2.default.createElement(_VisibleTodoList2.default, null),
-	    _react2.default.createElement(_Footer2.default, null)
+	    _react2.default.createElement(_addTodo2.default, null),
+	    _react2.default.createElement(_todoList2.default, null),
+	    _react2.default.createElement(_footer2.default, null)
 	  );
 	};
 
@@ -21317,9 +21317,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FilterLink = __webpack_require__(72);
+	var _link = __webpack_require__(72);
 
-	var _FilterLink2 = _interopRequireDefault(_FilterLink);
+	var _link2 = _interopRequireDefault(_link);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21330,19 +21330,19 @@
 	    'Show:',
 	    ' ',
 	    _react2.default.createElement(
-	      _FilterLink2.default,
+	      _link2.default,
 	      { filter: 'SHOW_ALL' },
 	      'All'
 	    ),
 	    ', ',
 	    _react2.default.createElement(
-	      _FilterLink2.default,
+	      _link2.default,
 	      { filter: 'SHOW_ACTIVE' },
 	      'Active'
 	    ),
 	    ', ',
 	    _react2.default.createElement(
-	      _FilterLink2.default,
+	      _link2.default,
 	      { filter: 'SHOW_COMPLETED' },
 	      'Completed'
 	    )
@@ -21365,9 +21365,9 @@
 
 	var _actions = __webpack_require__(73);
 
-	var _Link = __webpack_require__(74);
+	var _component = __webpack_require__(74);
 
-	var _Link2 = _interopRequireDefault(_Link);
+	var _component2 = _interopRequireDefault(_component);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21385,7 +21385,7 @@
 	  };
 	};
 
-	var FilterLink = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Link2.default);
+	var FilterLink = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_component2.default);
 
 	exports.default = FilterLink;
 
@@ -21549,9 +21549,9 @@
 
 	var _actions = __webpack_require__(73);
 
-	var _TodoList = __webpack_require__(77);
+	var _component = __webpack_require__(77);
 
-	var _TodoList2 = _interopRequireDefault(_TodoList);
+	var _component2 = _interopRequireDefault(_component);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21588,7 +21588,7 @@
 	  };
 	};
 
-	var VisibleTodoList = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_TodoList2.default);
+	var VisibleTodoList = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_component2.default);
 
 	exports.default = VisibleTodoList;
 
@@ -21612,9 +21612,9 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _Todo = __webpack_require__(78);
+	var _todo = __webpack_require__(78);
 
-	var _Todo2 = _interopRequireDefault(_Todo);
+	var _todo2 = _interopRequireDefault(_todo);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21626,7 +21626,7 @@
 	    'ul',
 	    null,
 	    todos.map(function (todo) {
-	      return _react2.default.createElement(_Todo2.default, _extends({ key: todo.id }, todo, { onClick: function onClick() {
+	      return _react2.default.createElement(_todo2.default, _extends({ key: todo.id }, todo, { onClick: function onClick() {
 	          return onTodoClick(todo.id);
 	        }, onDelete: function onDelete() {
 	          return onTodoDelete(todo.id);
