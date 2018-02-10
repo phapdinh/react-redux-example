@@ -21229,6 +21229,10 @@
 	      return state.map(function (todo) {
 	        return todo.id === action.id ? _extends({}, todo, { completed: !todo.completed }) : todo;
 	      });
+	    case 'DELETE_TODO':
+	      return state.filter(function (todo) {
+	        todo.id === action.id ? true : false;
+	      });
 	    default:
 	      return state;
 	  }
@@ -21417,6 +21421,13 @@
 	  };
 	};
 
+	var deleteTodo = exports.deleteTodo = function deleteTodo(id) {
+	  return {
+	    type: 'DELETE_TODO',
+	    id: id
+	  };
+	};
+
 /***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -21497,30 +21508,26 @@
 	  var input = void 0;
 
 	  return _react2.default.createElement(
-	    'div',
-	    null,
+	    'form',
+	    {
+	      onSubmit: function onSubmit(e) {
+	        e.preventDefault();
+	        if (!input.value.trim()) {
+	          return;
+	        }
+	        dispatch((0, _actions.addTodo)(input.value));
+	        input.value = '';
+	      }
+	    },
+	    _react2.default.createElement('input', {
+	      ref: function ref(node) {
+	        input = node;
+	      }
+	    }),
 	    _react2.default.createElement(
-	      'form',
-	      {
-	        onSubmit: function onSubmit(e) {
-	          e.preventDefault();
-	          if (!input.value.trim()) {
-	            return;
-	          }
-	          dispatch((0, _actions.addTodo)(input.value));
-	          input.value = '';
-	        }
-	      },
-	      _react2.default.createElement('input', {
-	        ref: function ref(node) {
-	          input = node;
-	        }
-	      }),
-	      _react2.default.createElement(
-	        'button',
-	        { type: 'submit' },
-	        'Add Todo'
-	      )
+	      'button',
+	      { type: 'submit' },
+	      'Add Todo'
 	    )
 	  );
 	};
@@ -21574,6 +21581,9 @@
 	  return {
 	    onTodoClick: function onTodoClick(id) {
 	      dispatch((0, _actions.toggleTodo)(id));
+	    },
+	    onTodoDelete: function onTodoDelete(id) {
+	      dispatch((0, _actions.deleteTodo)(id));
 	    }
 	  };
 	};
@@ -21610,13 +21620,16 @@
 
 	var TodoList = function TodoList(_ref) {
 	  var todos = _ref.todos,
-	      onTodoClick = _ref.onTodoClick;
+	      onTodoClick = _ref.onTodoClick,
+	      onTodoDelete = _ref.onTodoDelete;
 	  return _react2.default.createElement(
 	    'ul',
 	    null,
 	    todos.map(function (todo) {
 	      return _react2.default.createElement(_Todo2.default, _extends({ key: todo.id }, todo, { onClick: function onClick() {
 	          return onTodoClick(todo.id);
+	        }, onDelete: function onDelete() {
+	          return onTodoDelete(todo.id);
 	        } }));
 	    })
 	  );
@@ -21655,6 +21668,7 @@
 
 	var Todo = function Todo(_ref) {
 	  var onClick = _ref.onClick,
+	      onDelete = _ref.onDelete,
 	      completed = _ref.completed,
 	      text = _ref.text;
 	  return _react2.default.createElement(
@@ -21665,7 +21679,12 @@
 	        textDecoration: completed ? 'line-through' : 'none'
 	      }
 	    },
-	    text
+	    text,
+	    _react2.default.createElement(
+	      'button',
+	      { onClick: onDelete },
+	      'Delete'
+	    )
 	  );
 	};
 

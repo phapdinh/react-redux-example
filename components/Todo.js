@@ -1,14 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Todo = ({ onClick, completed, text }) => (
+const Todo = ({ onClick, onDelete, completed, text }) => (
   <li
     onClick={onClick}
     style={ {
       textDecoration: completed ? 'line-through' : 'none'
     }}
   >
-    {text}
+    {text  }
+    <button onClick={onDelete} >Delete</button>
   </li>
 )
 

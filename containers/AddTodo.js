@@ -6,7 +6,6 @@ let AddTodo = ({ dispatch }) => {
   let input
 
   return (
-    <div>
       <form
         onSubmit={e => {
           e.preventDefault()
@@ -26,7 +25,6 @@ let AddTodo = ({ dispatch }) => {
           Add Todo
         </button>
       </form>
-    </div>
   )
 }
 AddTodo = connect()(AddTodo)
