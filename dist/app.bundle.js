@@ -21231,7 +21231,7 @@
 	      });
 	    case 'DELETE_TODO':
 	      return state.filter(function (todo) {
-	        todo.id === action.id ? true : false;
+	        return !(todo.id === action.id);
 	      });
 	    default:
 	      return state;
@@ -21582,7 +21582,8 @@
 	    onTodoClick: function onTodoClick(id) {
 	      dispatch((0, _actions.toggleTodo)(id));
 	    },
-	    onTodoDelete: function onTodoDelete(id) {
+	    onTodoDelete: function onTodoDelete(event, id) {
+	      event.stopPropagation();
 	      dispatch((0, _actions.deleteTodo)(id));
 	    }
 	  };
@@ -21626,10 +21627,14 @@
 	    'ul',
 	    null,
 	    todos.map(function (todo) {
-	      return _react2.default.createElement(_todo2.default, _extends({ key: todo.id }, todo, { onClick: function onClick() {
+	      return _react2.default.createElement(_todo2.default, _extends({
+	        key: todo.id
+	      }, todo, {
+	        onClick: function onClick() {
 	          return onTodoClick(todo.id);
-	        }, onDelete: function onDelete() {
-	          return onTodoDelete(todo.id);
+	        },
+	        onDelete: function onDelete(event) {
+	          return onTodoDelete(event, todo.id);
 	        } }));
 	    })
 	  );
