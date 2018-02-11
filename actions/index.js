@@ -27,3 +27,18 @@ export const deleteTodo = id => {
         id
     }
 }
+
+export const updateTodo = id => {
+    return {
+        type: 'UPDATE_TODO',
+        id
+    }
+}
+
+export const finishUpdate = (text, id) => {
+    return {
+        type: 'FINISH_UPDATE',
+        id,
+        text
+    }
+}

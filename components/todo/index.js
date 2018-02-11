@@ -1,16 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Todo = ({ onClick, onDelete, completed, text }) => (
-  <li
-    onClick={onClick}
-    style={ {
-      textDecoration: completed ? 'line-through' : 'none'
-    }}
-  >
-    {text  }
-    <button onClick={onDelete} >Delete</button>
-  </li>
+let input;
+
+const Todo = ({ onClick, onDelete, onModify, onDone, completed, text, update }) => (
+    <li
+        onClick={onClick}
+        style={ {
+            textDecoration: completed ? 'line-through' : 'none'
+        }}
+    >
+        { update 
+            ? <input 
+                  ref={node => { input = node} }
+                  defaultValue={text}
+                  onClick={(event) => { event.stopPropagation() }}/>
+            : text }
+        &nbsp;
+        <button onClick={onDelete} >Delete</button>
+        { update 
+            ? <button onClick={(event) => { onDone(event, input.value) }}>Done</button>
+            : <button onClick={onModify}>Modify</button>}
+    </li>
 )
 
 Todo.propTypes = {

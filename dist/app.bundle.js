@@ -21207,7 +21207,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -21215,27 +21215,36 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var todos = function todos() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	  var action = arguments[1];
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
 
-	  switch (action.type) {
-	    case 'ADD_TODO':
-	      return [].concat(_toConsumableArray(state), [{
-	        id: action.id,
-	        text: action.text,
-	        completed: false
-	      }]);
-	    case 'TOGGLE_TODO':
-	      return state.map(function (todo) {
-	        return todo.id === action.id ? _extends({}, todo, { completed: !todo.completed }) : todo;
-	      });
-	    case 'DELETE_TODO':
-	      return state.filter(function (todo) {
-	        return !(todo.id === action.id);
-	      });
-	    default:
-	      return state;
-	  }
+	    switch (action.type) {
+	        case 'ADD_TODO':
+	            return [].concat(_toConsumableArray(state), [{
+	                id: action.id,
+	                text: action.text,
+	                completed: false,
+	                update: false
+	            }]);
+	        case 'TOGGLE_TODO':
+	            return state.map(function (todo) {
+	                return todo.id === action.id ? _extends({}, todo, { completed: !todo.completed }) : todo;
+	            });
+	        case 'DELETE_TODO':
+	            return state.filter(function (todo) {
+	                return !(todo.id === action.id);
+	            });
+	        case 'UPDATE_TODO':
+	            return state.map(function (todo) {
+	                return todo.id === action.id ? _extends({}, todo, { update: !todo.update }) : todo;
+	            });
+	        case 'FINISH_UPDATE':
+	            return state.map(function (todo) {
+	                return todo.id === action.id ? _extends({}, todo, { text: action.text, update: false }) : todo;
+	            });
+	        default:
+	            return state;
+	    }
 	};
 
 	exports.default = todos;
@@ -21428,6 +21437,21 @@
 	  };
 	};
 
+	var updateTodo = exports.updateTodo = function updateTodo(id) {
+	  return {
+	    type: 'UPDATE_TODO',
+	    id: id
+	  };
+	};
+
+	var finishUpdate = exports.finishUpdate = function finishUpdate(text, id) {
+	  return {
+	    type: 'FINISH_UPDATE',
+	    id: id,
+	    text: text
+	  };
+	};
+
 /***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -21542,7 +21566,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _reactRedux = __webpack_require__(27);
@@ -21556,37 +21580,47 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var getVisibleTodos = function getVisibleTodos(todos, filter) {
-	  switch (filter) {
-	    case 'SHOW_COMPLETED':
-	      return todos.filter(function (t) {
-	        return t.completed;
-	      });
-	    case 'SHOW_ACTIVE':
-	      return todos.filter(function (t) {
-	        return !t.completed;
-	      });
-	    case 'SHOW_ALL':
-	    default:
-	      return todos;
-	  }
+	    switch (filter) {
+	        case 'SHOW_COMPLETED':
+	            return todos.filter(function (t) {
+	                return t.completed;
+	            });
+	        case 'SHOW_ACTIVE':
+	            return todos.filter(function (t) {
+	                return !t.completed;
+	            });
+	        case 'SHOW_ALL':
+	        default:
+	            return todos;
+	    }
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    todos: getVisibleTodos(state.todos, state.visibilityFilter)
-	  };
+	    return {
+	        todos: getVisibleTodos(state.todos, state.visibilityFilter)
+	    };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    onTodoClick: function onTodoClick(id) {
-	      dispatch((0, _actions.toggleTodo)(id));
-	    },
-	    onTodoDelete: function onTodoDelete(event, id) {
-	      event.stopPropagation();
-	      dispatch((0, _actions.deleteTodo)(id));
-	    }
-	  };
+	    return {
+	        onTodoClick: function onTodoClick(id) {
+	            dispatch((0, _actions.toggleTodo)(id));
+	        },
+	        onTodoDelete: function onTodoDelete(event, id) {
+	            event.stopPropagation();
+	            dispatch((0, _actions.deleteTodo)(id));
+	        },
+	        onModify: function onModify(event, id) {
+	            event.stopPropagation();
+	            dispatch((0, _actions.updateTodo)(id));
+	        },
+	        finishUpdate: function finishUpdate(id) {
+	            return function (event, text) {
+	                event.stopPropagation();
+	                dispatch((0, _actions.finishUpdate)(text, id));
+	            };
+	        }
+	    };
 	};
 
 	var VisibleTodoList = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_component2.default);
@@ -21622,7 +21656,9 @@
 	var TodoList = function TodoList(_ref) {
 	  var todos = _ref.todos,
 	      onTodoClick = _ref.onTodoClick,
-	      onTodoDelete = _ref.onTodoDelete;
+	      onTodoDelete = _ref.onTodoDelete,
+	      _onModify = _ref.onModify,
+	      finishUpdate = _ref.finishUpdate;
 	  return _react2.default.createElement(
 	    'ul',
 	    null,
@@ -21635,7 +21671,11 @@
 	        },
 	        onDelete: function onDelete(event) {
 	          return onTodoDelete(event, todo.id);
-	        } }));
+	        },
+	        onModify: function onModify(event) {
+	          return _onModify(event, todo.id);
+	        },
+	        onDone: finishUpdate(todo.id) }));
 	    })
 	  );
 	};
@@ -21658,7 +21698,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -21671,32 +21711,56 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var input = void 0;
+
 	var Todo = function Todo(_ref) {
-	  var onClick = _ref.onClick,
-	      onDelete = _ref.onDelete,
-	      completed = _ref.completed,
-	      text = _ref.text;
-	  return _react2.default.createElement(
-	    'li',
-	    {
-	      onClick: onClick,
-	      style: {
-	        textDecoration: completed ? 'line-through' : 'none'
-	      }
-	    },
-	    text,
-	    _react2.default.createElement(
-	      'button',
-	      { onClick: onDelete },
-	      'Delete'
-	    )
-	  );
+	    var onClick = _ref.onClick,
+	        onDelete = _ref.onDelete,
+	        onModify = _ref.onModify,
+	        onDone = _ref.onDone,
+	        completed = _ref.completed,
+	        text = _ref.text,
+	        update = _ref.update;
+	    return _react2.default.createElement(
+	        'li',
+	        {
+	            onClick: onClick,
+	            style: {
+	                textDecoration: completed ? 'line-through' : 'none'
+	            }
+	        },
+	        update ? _react2.default.createElement('input', {
+	            ref: function ref(node) {
+	                input = node;
+	            },
+	            defaultValue: text,
+	            onClick: function onClick(event) {
+	                event.stopPropagation();
+	            } }) : text,
+	        '\xA0',
+	        _react2.default.createElement(
+	            'button',
+	            { onClick: onDelete },
+	            'Delete'
+	        ),
+	        update ? _react2.default.createElement(
+	            'button',
+	            { onClick: function onClick(event) {
+	                    onDone(event, input.value);
+	                } },
+	            'Done'
+	        ) : _react2.default.createElement(
+	            'button',
+	            { onClick: onModify },
+	            'Modify'
+	        )
+	    );
 	};
 
 	Todo.propTypes = {
-	  onClick: _propTypes2.default.func.isRequired,
-	  completed: _propTypes2.default.bool.isRequired,
-	  text: _propTypes2.default.string.isRequired
+	    onClick: _propTypes2.default.func.isRequired,
+	    completed: _propTypes2.default.bool.isRequired,
+	    text: _propTypes2.default.string.isRequired
 	};
 
 	exports.default = Todo;
