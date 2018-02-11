@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-let input;
-
-const Todo = ({ onClick, onDelete, onModify, onDone, completed, text, update }) => (
-    <li
+const Todo = ({ onClick, onDelete, onModify, onDone, completed, text, update }) => {
+    let input;
+    return (<li
         onClick={onClick}
         style={ {
             textDecoration: completed ? 'line-through' : 'none'
@@ -21,9 +20,8 @@ const Todo = ({ onClick, onDelete, onModify, onDone, completed, text, update }) 
         { update 
             ? <button onClick={(event) => { onDone(event, input.value) }}>Done</button>
             : <button onClick={onModify}>Modify</button>}
-    </li>
-)
-
+    </li>)
+}
 Todo.propTypes = {
   onClick: PropTypes.func.isRequired,
   completed: PropTypes.bool.isRequired,

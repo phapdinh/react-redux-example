@@ -4,6 +4,7 @@
   "description": "example of react with redux",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "./node_modules/.bin/webpack-dev-server --content-base src --inline --hot"
   },
@@ -26,5 +27,8 @@
     "redux": "^3.7.2",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0"
   }
 }
