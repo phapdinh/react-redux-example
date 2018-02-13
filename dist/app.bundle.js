@@ -21571,7 +21571,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var AddTodo = function AddTodo(_ref) {
-	  var dispatch = _ref.dispatch;
+	  var addTodo = _ref.addTodo;
 
 	  var input = void 0;
 
@@ -21583,7 +21583,7 @@
 	        if (!input.value.trim()) {
 	          return;
 	        }
-	        dispatch((0, _actions.addTodo)(input.value));
+	        addTodo(input.value);
 	        input.value = '';
 	      }
 	    },
@@ -21599,7 +21599,7 @@
 	    )
 	  );
 	};
-	AddTodo = (0, _reactRedux.connect)()(AddTodo);
+	AddTodo = (0, _reactRedux.connect)(null, { addTodo: _actions.addTodo })(AddTodo);
 
 	exports.default = AddTodo;
 
