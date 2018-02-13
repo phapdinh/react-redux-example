@@ -1,11 +1,10 @@
 let nextTodoId = 0;
-export const addTodo = text => {
-    return (dispatch) => dispatch({
-        type: 'ADD_TODO',
-        id: nextTodoId++,
-        text
-    });
-}
+export const addTodo = text => (dispatch) => dispatch({
+    type: 'ADD_TODO',
+    id: nextTodoId++,
+    text
+});
+
 
 export const setVisibilityFilter = filter => {
   return {
