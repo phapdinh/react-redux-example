@@ -21449,51 +21449,53 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	var nextTodoId = 0;
 	var addTodo = exports.addTodo = function addTodo(text) {
-	  return {
-	    type: 'ADD_TODO',
-	    id: nextTodoId++,
-	    text: text
-	  };
+	    return function (dispatch) {
+	        return dispatch({
+	            type: 'ADD_TODO',
+	            id: nextTodoId++,
+	            text: text
+	        });
+	    };
 	};
 
 	var setVisibilityFilter = exports.setVisibilityFilter = function setVisibilityFilter(filter) {
-	  return {
-	    type: 'SET_VISIBILITY_FILTER',
-	    filter: filter
-	  };
+	    return {
+	        type: 'SET_VISIBILITY_FILTER',
+	        filter: filter
+	    };
 	};
 
 	var toggleTodo = exports.toggleTodo = function toggleTodo(id) {
-	  return {
-	    type: 'TOGGLE_TODO',
-	    id: id
-	  };
+	    return {
+	        type: 'TOGGLE_TODO',
+	        id: id
+	    };
 	};
 
 	var deleteTodo = exports.deleteTodo = function deleteTodo(id) {
-	  return {
-	    type: 'DELETE_TODO',
-	    id: id
-	  };
+	    return {
+	        type: 'DELETE_TODO',
+	        id: id
+	    };
 	};
 
 	var updateTodo = exports.updateTodo = function updateTodo(id) {
-	  return {
-	    type: 'UPDATE_TODO',
-	    id: id
-	  };
+	    return {
+	        type: 'UPDATE_TODO',
+	        id: id
+	    };
 	};
 
 	var finishUpdate = exports.finishUpdate = function finishUpdate(text, id) {
-	  return {
-	    type: 'FINISH_UPDATE',
-	    id: id,
-	    text: text
-	  };
+	    return {
+	        type: 'FINISH_UPDATE',
+	        id: id,
+	        text: text
+	    };
 	};
 
 /***/ }),
@@ -21599,6 +21601,7 @@
 	    )
 	  );
 	};
+
 	AddTodo = (0, _reactRedux.connect)(null, { addTodo: _actions.addTodo })(AddTodo);
 
 	exports.default = AddTodo;
