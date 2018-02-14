@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "./node_modules/.bin/webpack-dev-server --content-base src --inline --hot"
+    "server": "./node_modules/.bin/webpack-dev-server --inline --hot"
   },
   "author": "",
   "license": "ISC",
