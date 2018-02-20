@@ -17,14 +17,17 @@ const TodoList = ({ todos, onTodoClick, onTodoDelete, onModify, finishUpdate }) 
 )
 
 TodoList.propTypes = {
-  todos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      completed: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
-  onTodoClick: PropTypes.func.isRequired
+    todos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            completed: PropTypes.bool.isRequired,
+            text: PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired,
+    onTodoDelete: PropTypes.func,
+    onModify: PropTypes.func,
+    finishUpdate: PropTypes.func,
+    onTodoClick: PropTypes.func.isRequired
 }
 
 export default TodoList

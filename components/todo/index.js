@@ -22,10 +22,15 @@ const Todo = ({ onClick, onDelete, onModify, onDone, completed, text, update }) 
             : <button onClick={onModify}>Modify</button>}
     </li>)
 }
+
 Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  completed: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
+    onClick: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
+    onModify: PropTypes.func,
+    onDone: PropTypes.func,
+    update: PropTypes.bool,
+    completed: PropTypes.bool.isRequired,
+    text: PropTypes.string.isRequired
 }
 
 export default Todo

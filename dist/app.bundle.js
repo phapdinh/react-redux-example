@@ -21570,6 +21570,10 @@
 
 	var _actions = __webpack_require__(75);
 
+	var _propTypes = __webpack_require__(29);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var AddTodo = function AddTodo(_ref) {
@@ -21600,6 +21604,10 @@
 	      'Add Todo'
 	    )
 	  );
+	};
+
+	AddTodo.propTypes = {
+	  addTodo: _propTypes2.default.func
 	};
 
 	AddTodo = (0, _reactRedux.connect)(null, { addTodo: _actions.addTodo })(AddTodo);
@@ -21733,6 +21741,9 @@
 	    completed: _propTypes2.default.bool.isRequired,
 	    text: _propTypes2.default.string.isRequired
 	  }).isRequired).isRequired,
+	  onTodoDelete: _propTypes2.default.func,
+	  onModify: _propTypes2.default.func,
+	  finishUpdate: _propTypes2.default.func,
 	  onTodoClick: _propTypes2.default.func.isRequired
 	};
 
@@ -21803,8 +21814,13 @@
 	        )
 	    );
 	};
+
 	Todo.propTypes = {
 	    onClick: _propTypes2.default.func.isRequired,
+	    onDelete: _propTypes2.default.func,
+	    onModify: _propTypes2.default.func,
+	    onDone: _propTypes2.default.func,
+	    update: _propTypes2.default.bool,
 	    completed: _propTypes2.default.bool.isRequired,
 	    text: _propTypes2.default.string.isRequired
 	};

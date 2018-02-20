@@ -1,6 +1,7 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { addTodo } from '../../actions'
+import React from 'react';
+import { connect } from 'react-redux';
+import { addTodo } from '../../actions';
+import PropTypes from 'prop-types';
 
 let AddTodo = ({ addTodo }) => {
   let input
@@ -26,6 +27,10 @@ let AddTodo = ({ addTodo }) => {
         </button>
       </form>
   )
+}
+
+AddTodo.propTypes = {
+    addTodo: PropTypes.func
 }
 
 AddTodo = connect(null, { addTodo })(AddTodo)
