@@ -1,5 +1,5 @@
 let nextTodoId = 0;
-export const addTodo = text => (dispatch) => dispatch({
+export const addTodo = text => dispatch => dispatch({
     type: 'ADD_TODO',
     id: nextTodoId++,
     text
