@@ -21286,7 +21286,7 @@
 	            return state.map(function (todo) {
 	                return todo.id === action.id ? _extends({}, todo, { text: action.text, update: false }) : todo;
 	            });
-	        case 'JSONPLACEHOLDER_TODOS':
+	        case 'SET_TODOS':
 	            return action.todos.map(function (_ref) {
 	                var id = _ref.id,
 	                    title = _ref.title,
@@ -21528,7 +21528,7 @@
 
 	var setJSONTodos = exports.setJSONTodos = function setJSONTodos(todos) {
 	    return {
-	        type: 'JSONPLACEHOLDER_TODOS',
+	        type: 'SET_TODOS',
 	        todos: todos
 	    };
 	};

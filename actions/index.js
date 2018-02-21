@@ -44,7 +44,7 @@ export const finishUpdate = (text, id) => {
 
 export const setJSONTodos = (todos) => {
     return {
-        type: 'JSONPLACEHOLDER_TODOS',
+        type: 'SET_TODOS',
         todos
     }
 }

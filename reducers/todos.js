@@ -30,7 +30,7 @@ const todos = (state = [], action) => {
             ? { ...todo, text: action.text, update: false }
             : todo
         )
-    case 'JSONPLACEHOLDER_TODOS':
+    case 'SET_TODOS':
         return action.todos.map(({ id, title, completed }) => {
             return {
                 id,
