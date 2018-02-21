@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios';
 
-const Link = ({ active, children, onClick }) => {
+const Link = ({ active, children, onClick, filter, setJSONTodos }) => {
   if (active) {
     return <span>{children}</span>
   }
@@ -11,7 +12,16 @@ const Link = ({ active, children, onClick }) => {
       href=""
       onClick={e => {
         e.preventDefault()
-        onClick()
+        if(filter === "JSONPLACEHOLDER_TODOS") {
+            axios.get('https://jsonplaceholder.typicode.com/todos')
+            .then(response => {
+                setJSONTodos(response.data);
+            })
+        } else if(filter === "DELETE_ALL") {
+            setJSONTodos([]);
+        } else {
+            onClick();
+        }
       }}
     >
       {children}

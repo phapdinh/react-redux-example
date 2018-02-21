@@ -41,3 +41,10 @@ export const finishUpdate = (text, id) => {
         text
     }
 }
+
+export const setJSONTodos = (todos) => {
+    return {
+        type: 'JSONPLACEHOLDER_TODOS',
+        todos
+    }
+}

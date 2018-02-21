@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setVisibilityFilter } from '../../actions';
+import { setVisibilityFilter, setJSONTodos } from '../../actions';
 import Link from './component';
 
 const mapStateToProps = (state, ownProps) => {
@@ -9,10 +9,13 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onClick: () => {
-      dispatch(setVisibilityFilter(ownProps.filter))
-    }
+    return {
+        onClick: () => {
+            dispatch(setVisibilityFilter(ownProps.filter));
+        },
+        setJSONTodos: (todos) => {
+            dispatch(setJSONTodos(todos));
+        }
   }
 }
 
