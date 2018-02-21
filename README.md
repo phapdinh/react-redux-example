@@ -8,4 +8,13 @@ install webpack globally
 compile webpack
 `webpack`
 
-open index.html file
+## How to run
+open index.html file in browser
+
+or
+
+run `npm run server`
+
+wait for `webpack: Compiled successfully.`
+
+go to `localhost:8080`
