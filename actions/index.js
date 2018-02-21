@@ -1,7 +1,5 @@
-let nextTodoId = 0;
 export const addTodo = text => dispatch => dispatch({
     type: 'ADD_TODO',
-    id: nextTodoId++,
     text
 });
 
@@ -46,5 +44,11 @@ export const setJSONTodos = (todos) => {
     return {
         type: 'SET_TODOS',
         todos
+    }
+}
+
+export const deleteAll = () => {
+    return { 
+        type: 'DELETE_ALL'
     }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios';
 
-const Link = ({ active, children, onClick, filter, setJSONTodos }) => {
+const Link = ({ active, children, onClick, filter, setJSONTodos, deleteAll }) => {
   if (active) {
     return <span>{children}</span>
   }
@@ -18,7 +18,7 @@ const Link = ({ active, children, onClick, filter, setJSONTodos }) => {
                 setJSONTodos(response.data);
             })
         } else if(filter === "DELETE_ALL") {
-            setJSONTodos([]);
+            deleteAll();
         } else {
             onClick();
         }

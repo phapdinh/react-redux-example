@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setVisibilityFilter, setJSONTodos } from '../../actions';
+import { setVisibilityFilter, setJSONTodos, deleteAll } from '../../actions';
 import Link from './component';
 
 const mapStateToProps = (state, ownProps) => {
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         setJSONTodos: (todos) => {
             dispatch(setJSONTodos(todos));
+        },
+        deleteAll: () => {
+            dispatch(deleteAll());
         }
   }
 }

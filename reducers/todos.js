@@ -4,7 +4,7 @@ const todos = (state = [], action) => {
         return [
             ...state,
             {
-                id: action.id,
+                id: state.length,
                 text: action.text,
                 completed: false,
                 update: false
@@ -18,6 +18,9 @@ const todos = (state = [], action) => {
         )
     case 'DELETE_TODO':
         return state.filter(todo => !(todo.id === action.id))
+                .map(todo => {
+                    return todo.id > action.id ? { ...todo, id: --todo.id} : todo;
+                })
     case 'UPDATE_TODO':
         return state.map(todo =>
             (todo.id === action.id)
@@ -31,14 +34,20 @@ const todos = (state = [], action) => {
             : todo
         )
     case 'SET_TODOS':
-        return action.todos.map(({ id, title, completed }) => {
-            return {
-                id,
-                text: title,
-                completed,
-                update: false
-            }
-        })  
+        return [
+            ...state,
+            ...action.todos.map(({ id, title, completed }) => {
+                    return {
+                        id: id + state.length - 1,
+                        text: title,
+                        completed,
+                        update: false
+                    }
+                }
+            )
+        ]
+    case 'DELETE_ALL':
+        return []
     default:
         return state
   }

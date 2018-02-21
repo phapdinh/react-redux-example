@@ -21265,7 +21265,7 @@
 	    switch (action.type) {
 	        case 'ADD_TODO':
 	            return [].concat(_toConsumableArray(state), [{
-	                id: action.id,
+	                id: state.length,
 	                text: action.text,
 	                completed: false,
 	                update: false
@@ -21277,6 +21277,8 @@
 	        case 'DELETE_TODO':
 	            return state.filter(function (todo) {
 	                return !(todo.id === action.id);
+	            }).map(function (todo) {
+	                return todo.id > action.id ? _extends({}, todo, { id: --todo.id }) : todo;
 	            });
 	        case 'UPDATE_TODO':
 	            return state.map(function (todo) {
@@ -21287,18 +21289,20 @@
 	                return todo.id === action.id ? _extends({}, todo, { text: action.text, update: false }) : todo;
 	            });
 	        case 'SET_TODOS':
-	            return action.todos.map(function (_ref) {
+	            return [].concat(_toConsumableArray(state), _toConsumableArray(action.todos.map(function (_ref) {
 	                var id = _ref.id,
 	                    title = _ref.title,
 	                    completed = _ref.completed;
 
 	                return {
-	                    id: id,
+	                    id: id + state.length - 1,
 	                    text: title,
 	                    completed: completed,
 	                    update: false
 	                };
-	            });
+	            })));
+	        case 'DELETE_ALL':
+	            return [];
 	        default:
 	            return state;
 	    }
@@ -21436,7 +21440,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _reactRedux = __webpack_require__(27);
@@ -21450,20 +21454,23 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	  return {
-	    active: ownProps.filter === state.visibilityFilter
-	  };
+	    return {
+	        active: ownProps.filter === state.visibilityFilter
+	    };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	  return {
-	    onClick: function onClick() {
-	      dispatch((0, _actions.setVisibilityFilter)(ownProps.filter));
-	    },
-	    setJSONTodos: function setJSONTodos(todos) {
-	      dispatch((0, _actions.setJSONTodos)(todos));
-	    }
-	  };
+	    return {
+	        onClick: function onClick() {
+	            dispatch((0, _actions.setVisibilityFilter)(ownProps.filter));
+	        },
+	        setJSONTodos: function setJSONTodos(todos) {
+	            dispatch((0, _actions.setJSONTodos)(todos));
+	        },
+	        deleteAll: function deleteAll() {
+	            dispatch((0, _actions.deleteAll)());
+	        }
+	    };
 	};
 
 	var FilterLink = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_component2.default);
@@ -21479,12 +21486,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var nextTodoId = 0;
 	var addTodo = exports.addTodo = function addTodo(text) {
 	    return function (dispatch) {
 	        return dispatch({
 	            type: 'ADD_TODO',
-	            id: nextTodoId++,
 	            text: text
 	        });
 	    };
@@ -21533,6 +21538,12 @@
 	    };
 	};
 
+	var deleteAll = exports.deleteAll = function deleteAll() {
+	    return {
+	        type: 'DELETE_ALL'
+	    };
+	};
+
 /***/ }),
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -21562,7 +21573,8 @@
 	      children = _ref.children,
 	      _onClick = _ref.onClick,
 	      filter = _ref.filter,
-	      setJSONTodos = _ref.setJSONTodos;
+	      setJSONTodos = _ref.setJSONTodos,
+	      deleteAll = _ref.deleteAll;
 
 	  if (active) {
 	    return _react2.default.createElement(
@@ -21583,7 +21595,7 @@
 	            setJSONTodos(response.data);
 	          });
 	        } else if (filter === "DELETE_ALL") {
-	          setJSONTodos([]);
+	          deleteAll();
 	        } else {
 	          _onClick();
 	        }
