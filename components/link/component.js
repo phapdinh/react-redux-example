@@ -13,10 +13,7 @@ const Link = ({ active, children, onClick, filter, setJSONTodos, deleteAll }) =>
       onClick={e => {
         e.preventDefault()
         if(filter === "JSONPLACEHOLDER_TODOS") {
-            axios.get('https://jsonplaceholder.typicode.com/todos')
-            .then(response => {
-                setJSONTodos(response.data);
-            })
+            setJSONTodos();
         } else if(filter === "DELETE_ALL") {
             deleteAll();
         } else {

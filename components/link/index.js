@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import axios from 'axios';
+
 import { setVisibilityFilter, setJSONTodos, deleteAll } from '../../actions';
 import Link from './component';
 
@@ -13,8 +15,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onClick: () => {
             dispatch(setVisibilityFilter(ownProps.filter));
         },
-        setJSONTodos: (todos) => {
-            dispatch(setJSONTodos(todos));
+        setJSONTodos: () => {
+            axios.get('https://jsonplaceholder.typicode.com/todos')
+            .then(response => {
+                dispatch(setJSONTodos(response.data));
+            })
         },
         deleteAll: () => {
             dispatch(deleteAll());
