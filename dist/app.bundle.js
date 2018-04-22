@@ -70,7 +70,7 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _app = __webpack_require__(77);
+	var _app = __webpack_require__(78);
 
 	var _app2 = _interopRequireDefault(_app);
 
@@ -21332,7 +21332,7 @@
 
 	var _todos2 = _interopRequireDefault(_todos);
 
-	var _visibilityFilter = __webpack_require__(76);
+	var _visibilityFilter = __webpack_require__(77);
 
 	var _visibilityFilter2 = _interopRequireDefault(_visibilityFilter);
 
@@ -21347,7 +21347,7 @@
 
 /***/ }),
 /* 75 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -21359,41 +21359,51 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+	var _require = __webpack_require__(76),
+	    ADD_TODO = _require.ADD_TODO,
+	    FILTER_TODO = _require.FILTER_TODO,
+	    TOGGLE_TODO = _require.TOGGLE_TODO,
+	    DELETE_TODO = _require.DELETE_TODO,
+	    UPDATE_TODO = _require.UPDATE_TODO,
+	    FINISH_UPDATE = _require.FINISH_UPDATE,
+	    SET_TODOS = _require.SET_TODOS,
+	    DELETE_ALL = _require.DELETE_ALL;
+
 	var todos = function todos() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case 'ADD_TODO':
+	        case ADD_TODO:
 	            return [].concat(_toConsumableArray(state), [{
 	                id: state.length,
 	                text: action.text,
 	                completed: false,
 	                update: false
 	            }]);
-	        case 'FILTER_TODO':
+	        case FILTER_TODO:
 	            return state.filter(function (todo) {
 	                return todo.text.includes(action.text);
 	            });
-	        case 'TOGGLE_TODO':
+	        case TOGGLE_TODO:
 	            return state.map(function (todo) {
 	                return todo.id === action.id ? _extends({}, todo, { completed: !todo.completed }) : todo;
 	            });
-	        case 'DELETE_TODO':
+	        case DELETE_TODO:
 	            return state.filter(function (todo) {
 	                return !(todo.id === action.id);
 	            }).map(function (todo) {
 	                return todo.id > action.id ? _extends({}, todo, { id: --todo.id }) : todo;
 	            });
-	        case 'UPDATE_TODO':
+	        case UPDATE_TODO:
 	            return state.map(function (todo) {
 	                return todo.id === action.id ? _extends({}, todo, { update: !todo.update }) : todo;
 	            });
-	        case 'FINISH_UPDATE':
+	        case FINISH_UPDATE:
 	            return state.map(function (todo) {
 	                return todo.id === action.id ? _extends({}, todo, { text: action.text, update: false }) : todo;
 	            });
-	        case 'SET_TODOS':
+	        case SET_TODOS:
 	            return [].concat(_toConsumableArray(state), _toConsumableArray(action.todos.map(function (_ref) {
 	                var id = _ref.id,
 	                    title = _ref.title,
@@ -21406,7 +21416,7 @@
 	                    update: false
 	                };
 	            })));
-	        case 'DELETE_ALL':
+	        case DELETE_ALL:
 	            return [];
 	        default:
 	            return state;
@@ -21422,14 +21432,100 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ADD_TODO = exports.ADD_TODO = 'ADD_TODO';
+	var addTodo = exports.addTodo = function addTodo(text) {
+	    return function (dispatch) {
+	        return dispatch({
+	            type: ADD_TODO,
+	            text: text
+	        });
+	    };
+	};
+
+	var FILTER_TODO = exports.FILTER_TODO = 'FILTER_TODO';
+	var filterTodo = exports.filterTodo = function filterTodo(text) {
+	    return function (dispatch) {
+	        return dispatch({ type: FILTER_TODO, text: text });
+	    };
+	};
+
+	var SET_VISIBILITY_FILTER = exports.SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+	var setVisibilityFilter = exports.setVisibilityFilter = function setVisibilityFilter(filter) {
+	    return {
+	        type: SET_VISIBILITY_FILTER,
+	        filter: filter
+	    };
+	};
+
+	var TOGGLE_TODO = exports.TOGGLE_TODO = 'TOGGLE_TODO';
+	var toggleTodo = exports.toggleTodo = function toggleTodo(id) {
+	    return {
+	        type: TOGGLE_TODO,
+	        id: id
+	    };
+	};
+
+	var DELETE_TODO = exports.DELETE_TODO = 'DELETE_TODO';
+	var deleteTodo = exports.deleteTodo = function deleteTodo(id) {
+	    return {
+	        type: DELETE_TODO,
+	        id: id
+	    };
+	};
+
+	var UPDATE_TODO = exports.UPDATE_TODO = 'UPDATE_TODO';
+	var updateTodo = exports.updateTodo = function updateTodo(id) {
+	    return {
+	        type: UPDATE_TODO,
+	        id: id
+	    };
+	};
+
+	var FINISH_UPDATE = exports.FINISH_UPDATE = 'FINISH_UPDATE';
+	var finishUpdate = exports.finishUpdate = function finishUpdate(text, id) {
+	    return {
+	        type: FINISH_UPDATE,
+	        id: id,
+	        text: text
+	    };
+	};
+
+	var SET_TODOS = exports.SET_TODOS = 'SET_TODOS';
+	var setJSONTodos = exports.setJSONTodos = function setJSONTodos(todos) {
+	    return {
+	        type: SET_TODOS,
+	        todos: todos
+	    };
+	};
+
+	var DELETE_ALL = exports.DELETE_ALL = 'DELETE_ALL';
+	var deleteAll = exports.deleteAll = function deleteAll() {
+	    return {
+	        type: DELETE_ALL
+	    };
+	};
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _require = __webpack_require__(76),
+	    SET_VISIBILITY_FILTER = _require.SET_VISIBILITY_FILTER;
+
 	var visibilityFilter = function visibilityFilter() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'SHOW_ALL';
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'SET_VISIBILITY_FILTER':
+	    case SET_VISIBILITY_FILTER:
 	      return action.filter;
 	    default:
 	      return state;
@@ -21439,7 +21535,7 @@
 	exports.default = visibilityFilter;
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21452,7 +21548,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _footer = __webpack_require__(78);
+	var _footer = __webpack_require__(79);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
@@ -21479,7 +21575,7 @@
 	exports.default = App;
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21492,7 +21588,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _link = __webpack_require__(79);
+	var _link = __webpack_require__(80);
 
 	var _link2 = _interopRequireDefault(_link);
 
@@ -21539,7 +21635,7 @@
 	exports.default = Footer;
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21550,11 +21646,11 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _axios = __webpack_require__(80);
+	var _axios = __webpack_require__(81);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _actions = __webpack_require__(106);
+	var _actions = __webpack_require__(76);
 
 	var _component = __webpack_require__(107);
 
@@ -21589,21 +21685,21 @@
 	exports.default = FilterLink;
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(81);
+	module.exports = __webpack_require__(82);
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
-	var bind = __webpack_require__(83);
-	var Axios = __webpack_require__(85);
-	var defaults = __webpack_require__(86);
+	var utils = __webpack_require__(83);
+	var bind = __webpack_require__(84);
+	var Axios = __webpack_require__(86);
+	var defaults = __webpack_require__(87);
 
 	/**
 	 * Create an instance of Axios
@@ -21636,15 +21732,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(103);
-	axios.CancelToken = __webpack_require__(104);
-	axios.isCancel = __webpack_require__(100);
+	axios.Cancel = __webpack_require__(104);
+	axios.CancelToken = __webpack_require__(105);
+	axios.isCancel = __webpack_require__(101);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(105);
+	axios.spread = __webpack_require__(106);
 
 	module.exports = axios;
 
@@ -21653,13 +21749,13 @@
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(83);
-	var isBuffer = __webpack_require__(84);
+	var bind = __webpack_require__(84);
+	var isBuffer = __webpack_require__(85);
 
 	/*global toString:true*/
 
@@ -21962,7 +22058,7 @@
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -21979,7 +22075,7 @@
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports) {
 
 	/*!
@@ -22006,15 +22102,15 @@
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(86);
-	var utils = __webpack_require__(82);
-	var InterceptorManager = __webpack_require__(97);
-	var dispatchRequest = __webpack_require__(98);
+	var defaults = __webpack_require__(87);
+	var utils = __webpack_require__(83);
+	var InterceptorManager = __webpack_require__(98);
+	var dispatchRequest = __webpack_require__(99);
 
 	/**
 	 * Create a new instance of Axios
@@ -22091,13 +22187,13 @@
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(82);
-	var normalizeHeaderName = __webpack_require__(87);
+	var utils = __webpack_require__(83);
+	var normalizeHeaderName = __webpack_require__(88);
 
 	var DEFAULT_CONTENT_TYPE = {
 	  'Content-Type': 'application/x-www-form-urlencoded'
@@ -22113,10 +22209,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(88);
+	    adapter = __webpack_require__(89);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(88);
+	    adapter = __webpack_require__(89);
 	  }
 	  return adapter;
 	}
@@ -22194,12 +22290,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -22212,18 +22308,18 @@
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(82);
-	var settle = __webpack_require__(89);
-	var buildURL = __webpack_require__(92);
-	var parseHeaders = __webpack_require__(93);
-	var isURLSameOrigin = __webpack_require__(94);
-	var createError = __webpack_require__(90);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(95);
+	var utils = __webpack_require__(83);
+	var settle = __webpack_require__(90);
+	var buildURL = __webpack_require__(93);
+	var parseHeaders = __webpack_require__(94);
+	var isURLSameOrigin = __webpack_require__(95);
+	var createError = __webpack_require__(91);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(96);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -22320,7 +22416,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(96);
+	      var cookies = __webpack_require__(97);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -22399,12 +22495,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(90);
+	var createError = __webpack_require__(91);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -22431,12 +22527,12 @@
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(91);
+	var enhanceError = __webpack_require__(92);
 
 	/**
 	 * Create an Error with the specified message, config, error code, request and response.
@@ -22455,7 +22551,7 @@
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -22482,12 +22578,12 @@
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -22554,12 +22650,12 @@
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	// Headers whose duplicates are ignored by node
 	// c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -22613,12 +22709,12 @@
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -22687,7 +22783,7 @@
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -22729,12 +22825,12 @@
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -22788,12 +22884,12 @@
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -22846,17 +22942,17 @@
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
-	var transformData = __webpack_require__(99);
-	var isCancel = __webpack_require__(100);
-	var defaults = __webpack_require__(86);
-	var isAbsoluteURL = __webpack_require__(101);
-	var combineURLs = __webpack_require__(102);
+	var utils = __webpack_require__(83);
+	var transformData = __webpack_require__(100);
+	var isCancel = __webpack_require__(101);
+	var defaults = __webpack_require__(87);
+	var isAbsoluteURL = __webpack_require__(102);
+	var combineURLs = __webpack_require__(103);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -22938,12 +23034,12 @@
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(82);
+	var utils = __webpack_require__(83);
 
 	/**
 	 * Transform the data for a request or a response
@@ -22964,7 +23060,7 @@
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -22975,7 +23071,7 @@
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -22995,7 +23091,7 @@
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -23015,7 +23111,7 @@
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -23040,12 +23136,12 @@
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(103);
+	var Cancel = __webpack_require__(104);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -23103,7 +23199,7 @@
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -23136,79 +23232,6 @@
 
 
 /***/ }),
-/* 106 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var addTodo = exports.addTodo = function addTodo(text) {
-	    return function (dispatch) {
-	        return dispatch({
-	            type: 'ADD_TODO',
-	            text: text
-	        });
-	    };
-	};
-
-	var filterTodo = exports.filterTodo = function filterTodo(text) {
-	    return function (dispatch) {
-	        return dispatch({ type: 'FILTER_TODO', text: text });
-	    };
-	};
-
-	var setVisibilityFilter = exports.setVisibilityFilter = function setVisibilityFilter(filter) {
-	    return {
-	        type: 'SET_VISIBILITY_FILTER',
-	        filter: filter
-	    };
-	};
-
-	var toggleTodo = exports.toggleTodo = function toggleTodo(id) {
-	    return {
-	        type: 'TOGGLE_TODO',
-	        id: id
-	    };
-	};
-
-	var deleteTodo = exports.deleteTodo = function deleteTodo(id) {
-	    return {
-	        type: 'DELETE_TODO',
-	        id: id
-	    };
-	};
-
-	var updateTodo = exports.updateTodo = function updateTodo(id) {
-	    return {
-	        type: 'UPDATE_TODO',
-	        id: id
-	    };
-	};
-
-	var finishUpdate = exports.finishUpdate = function finishUpdate(text, id) {
-	    return {
-	        type: 'FINISH_UPDATE',
-	        id: id,
-	        text: text
-	    };
-	};
-
-	var setJSONTodos = exports.setJSONTodos = function setJSONTodos(todos) {
-	    return {
-	        type: 'SET_TODOS',
-	        todos: todos
-	    };
-	};
-
-	var deleteAll = exports.deleteAll = function deleteAll() {
-	    return {
-	        type: 'DELETE_ALL'
-	    };
-	};
-
-/***/ }),
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23226,7 +23249,7 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _axios = __webpack_require__(80);
+	var _axios = __webpack_require__(81);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -23291,7 +23314,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _actions = __webpack_require__(106);
+	var _actions = __webpack_require__(76);
 
 	var _propTypes = __webpack_require__(29);
 
@@ -23332,7 +23355,6 @@
 	          if (!input.value.trim()) {
 	            return;
 	          }
-	          console.log('filter value', input.value);
 	          filterTodo(input.value);
 	          input.value = '';
 	        } },
@@ -23362,7 +23384,7 @@
 
 	var _reactRedux = __webpack_require__(27);
 
-	var _actions = __webpack_require__(106);
+	var _actions = __webpack_require__(76);
 
 	var _component = __webpack_require__(110);
 
