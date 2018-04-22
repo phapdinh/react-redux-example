@@ -3,6 +3,7 @@ export const addTodo = text => dispatch => dispatch({
     text
 });
 
+export const filterTodo = text => dispatch => dispatch({ type: 'FILTER_TODO', text })
 
 export const setVisibilityFilter = filter => {
   return {

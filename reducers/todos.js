@@ -10,6 +10,8 @@ const todos = (state = [], action) => {
                 update: false
             }
         ]
+    case 'FILTER_TODO':
+        return state.filter(todo => todo.text.includes(action.text))
     case 'TOGGLE_TODO':
         return state.map(todo =>
             (todo.id === action.id) 
